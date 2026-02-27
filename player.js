@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("gettin-it.m4a", () => {
 
   const playButtons = document.querySelectorAll(".play-btn");
   const allAudios = document.querySelectorAll(".beat-audio");
