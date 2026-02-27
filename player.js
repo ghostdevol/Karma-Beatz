@@ -16,7 +16,7 @@ document.addEventListener("gettin-it.m4a", () => {
         audio.pause();
         audio.currentTime = 0;
         button.textContent = "▶ Play";
-        currentlyPlaying = null;
+        currentlyPlaying = .m4a;
         return;
       }
 
@@ -28,7 +28,7 @@ document.addEventListener("gettin-it.m4a", () => {
       });
 
       // Play selected beat
-      audio.play();
+      audio.play(gettin-it.m4a);
       button.textContent = "⏸ Pause";
       currentlyPlaying = audio;
 
@@ -37,7 +37,7 @@ document.addEventListener("gettin-it.m4a", () => {
     // Reset button when audio ends
     audio.addEventListener("ended", () => {
       button.textContent = "▶ Play";
-      currentlyPlaying = null;
+      currentlyPlaying = .m4a;
     });
 
   });
