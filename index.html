@@ -1,43 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KaRmA bEatZ | Premium Beats & Custom Production</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Optional: Font Awesome for social icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <title>Karma-Beatz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 80px;
+    }
+    h1 {
+      letter-spacing: 2px;
+    }
+    .player-info {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- HEADER -->
-        <header class="neon-glow">
-            <img src="assets/logo.png" alt="KaRmA bEatZ Logo" class="logo">
-            <h1>KaRmA bEatZ</h1>
-            <p class="tagline">Premium Beats • Custom Mixes • Exclusive Drops</p>
-        </header>
+  <h1>Karma-Beatz</h1>
 
-        <!-- BIO SECTION -->
-        <section class="bio-section">
-            <h2 class="neon-text">About The Producer</h2>
-            <div class="bio-content">
-                <p>
-                    I'm a skilled music producer specializing in high-energy trap, melodic hip-hop, and experimental beats. 
-                    With years of experience in BandLab and professional mixing, I craft soundscapes that elevate your artistry.
-                    Whether you need a lease for a hit or a fully custom production, I bring the heat.
-                </p>
-                <div class="social-links">
-                    <a href="#" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                    <a href="#" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
-                    <a href="#" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-                </div>
-            </div>
-        </section>
+  <!-- Auto-playing M4A audio -->
+  <audio id="karmaPlayer" src="karma-beatz.m4a" autoplay loop controls>
+    Your browser does not support the audio element.
+  </audio>
 
-        <!-- BEAT SHOWCASE -->
-        <section class="player-section">
-            <h2 class="neon-text">Latest Drops</h2>
-            
-            <!-- Beat Card 1 -->
-          <karma_-_NAILZ.m4a>
-          </KaRmA_-_WeLKoM_2_ThE_CirKuS_.m4a>
+  <div class="player-info">
+    Now playing: Karma-Beatz
+  </div>
+
+  <script>
+    // Some browsers block autoplay with sound; this tries to start playback after load.
+    window.addEventListener('load', function () {
+      const audio = document.getElementById('karmaPlayer');
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay blocked; you could show a message or rely on user pressing play.
+          console.log('Autoplay was blocked by the browser.');
+        });
+      }
+    });
+  </script>
+</body>
+</html>
