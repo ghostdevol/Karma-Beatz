@@ -1,51 +1,534 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Karma-Beatz</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <style>
-    body {
-      background: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding-top: 80px;
-    }
-    h1 {
-      letter-spacing: 2px;
-    }
-    .player-info {
-      margin-top: 20px;
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeatMarket - Premium Beats Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
+        .logo i {
+            color: #4ecdc4;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #4ecdc4;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #4ecdc4;
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #ddd;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-bar {
+            max-width: 500px;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            padding-left: 50px;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        }
+
+        .beats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .beat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .beat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .beat-image {
+            height: 200px;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .beat-image i {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .beat-card:hover .play-btn {
+            opacity: 1;
+        }
+
+        .beat-info {
+            padding: 20px;
+        }
+
+        .beat-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .beat-producer {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .beat-bpm {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+
+        .beat-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .buy-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .cart-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Karma-Beatz</h1>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-headphones"></i>
+                <span>BeatMarket</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-music"></i> Beats</a></li>
+                    <li><a href="#"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+                    <li><a href="#"><i class="fas fa-user"></i> Account</a></li>
+                </ul>
+            </nav>
+        </header>
 
-  <!-- Auto-playing M4A audio -->
-  <audio id="karmaPlayer" src="karma-beatz.m4a" autoplay loop controls>
-    Your browser does not support the audio element.
-  </audio>
+        <section class="hero">
+            <h1>Premium Beats Marketplace</h1>
+            <p>Discover exclusive instrumentals crafted by top producers. License your next hit today!</p>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for beats, genres, BPM...">
+            </div>
+            <a href="#" class="btn">Explore Beats</a>
+        </section>
 
-  <div class="player-info">
-    Now playing: Karma-Beatz
-  </div>
+        <div class="filters">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Hip-Hop</button>
+            <button class="filter-btn">Trap</button>
+            <button class="filter-btn">R&B</button>
+            <button class="filter-btn">Pop</button>
+            <button class="filter-btn">Lo-Fi</button>
+        </div>
 
-  <script>
-    // Some browsers block autoplay with sound; this tries to start playback after load.
-    window.addEventListener('load', function () {
-      const audio = document.getElementById('karmaPlayer');
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Autoplay blocked; you could show a message or rely on user pressing play.
-          console.log('Autoplay was blocked by the browser.');
+        <div class="beats-grid">
+            <!-- Beat Card 1 -->
+            <div class="beat-card">
+                <div class="beat-image">
+                    <i class="fas fa-music"></i>
+                    <div class="play-btn">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="beat-info">
+                    <h3 class="beat-title">Midnight Drive</h3>
+                    <p class="beat-producer">By ProducerMike</p>
+                    <div class="beat-bpm">
+                        <span>BPM: 85</span>
+                        <span>Key: C Minor</span>
+                    </div>
+                    <div class="price">$25.00</div>
+                    <div class="beat-actions">
+                        <button class="action-btn buy-btn">Buy Now</button>
+                        <button class="action-btn cart-btn"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beat Card 2 -->
+            <div class="beat-card">
+                <div class="beat-image">
+                    <i class="fas fa-music"></i>
+                    <div class="play-btn">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="beat-info">
+                    <h3 class="beat-title">Urban Dreams</h3>
+                    <p class="beat-producer">By BeatMaster</p>
+                    <div class="beat-bpm">
+                        <span>BPM: 90</span>
+                        <span>Key: D Major</span>
+                    </div>
+                    <div class="price">$30.00</div>
+                    <div class="beat-actions">
+                        <button class="action-btn buy-btn">Buy Now</button>
+                        <button class="action-btn cart-btn"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beat Card 3 -->
+            <div class="beat-card">
+                <div class="beat-image">
+                    <i class="fas fa-music"></i>
+                    <div class="play-btn">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="beat-info">
+                    <h3 class="beat-title">Neon Lights</h3>
+                    <p class="beat-producer">By SynthWave</p>
+                    <div class="beat-bpm">
+                        <span>BPM: 120</span>
+                        <span>Key: A Minor</span>
+                    </div>
+                    <div class="price">$35.00</div>
+                    <div class="beat-actions">
+                        <button class="action-btn buy-btn">Buy Now</button>
+                        <button class="action-btn cart-btn"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beat Card 4 -->
+            <div class="beat-card">
+                <div class="beat-image">
+                    <i class="fas fa-music"></i>
+                    <div class="play-btn">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="beat-info">
+                    <h3 class="beat-title">Golden Hour</h3>
+                    <p class="beat-producer">By SoulMakers</p>
+                    <div class="beat-bpm">
+                        <span>BPM: 75</span>
+                        <span>Key: E Major</span>
+                    </div>
+                    <div class="price">$28.00</div>
+                    <div class="beat-actions">
+                        <button class="action-btn buy-btn">Buy Now</button>
+                        <button class="action-btn cart-btn"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beat Card 5 -->
+            <div class="beat-card">
+                <div class="beat-image">
+                    <i class="fas fa-music"></i>
+                    <div class="play-btn">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="beat-info">
+                    <h3 class="beat-title">Concrete Jungle</h3>
+                    <p class="beat-producer">By StreetBeats</p>
+                    <div class="beat-bpm">
+                        <span>BPM: 95</span>
+                        <span>Key: F# Minor</span>
+                    </div>
+                    <div class="price">$32.00</div>
+                    <div class="beat-actions">
+                        <button class="action-btn buy-btn">Buy Now</button>
+                        <button class="action-btn cart-btn"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beat Card 6 -->
+            <div class="beat-card">
+                <div class="beat-image">
+                    <i class="fas fa-music"></i>
+                    <div class="play-btn">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="beat-info">
+                    <h3 class="beat-title">Cosmic Flow</h3>
+                    <p class="beat-producer">By SpaceProducer</p>
+                    <div class="beat-bpm">
+                        <span>BPM: 100</span>
+                        <span>Key: G Major</span>
+                    </div>
+                    <div class="price">$40.00</div>
+                    <div class="beat-actions">
+                        <button class="action-btn buy-btn">Buy Now</button>
+                        <button class="action-btn cart-btn"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2023 BeatMarket. All rights reserved.</p>
+            <p>Licensed beats for commercial use available.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add interactivity to filter buttons
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
         });
-      }
-    });
-  </script>
+
+        // Add play functionality to play buttons
+        const playBtns = document.querySelectorAll('.play-btn');
+        playBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const card = this.closest('.beat-card');
+                alert(`Now playing: ${card.querySelector('.beat-title').textContent}`);
+            });
+        });
+
+        // Add buy button functionality
+        const buyBtns = document.querySelectorAll('.buy-btn');
+        buyBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.beat-card');
+                const title = card.querySelector('.beat-title').textContent;
+                alert(`Added "${title}" to your purchase queue!`);
+            });
+        });
+
+        // Add cart button functionality
+        const cartBtns = document.querySelectorAll('.cart-btn');
+        cartBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.beat-card');
+                const title = card.querySelector('.beat-title').textContent;
+                alert(`"${title}" added to cart!`);
+            });
+        });
+    </script>
 </body>
-</html>
+              </html>
